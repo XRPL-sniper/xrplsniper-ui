@@ -1,4 +1,5 @@
-import React, { useMemo, useState } from 'react'
+// import React, { useMemo, useState } from 'react'
+import React, { useState } from 'react'
 import { ChevronLeftIcon, ChevronRightIcon } from '@heroicons/react/solid'
 import Modal from './Modal'
 import { ElementTitle } from './styles'
@@ -8,7 +9,7 @@ import useMangoStore, { ENDPOINTS } from '../stores/useMangoStore'
 import useLocalStorageState from '../hooks/useLocalStorageState'
 import Select from './Select'
 import { useTranslation } from 'next-i18next'
-import Switch from './Switch'
+// import Switch from './Switch'
 import { MarketKind } from '@blockworks-foundation/mango-client'
 import { useTheme } from 'next-themes'
 import { useRouter } from 'next/router'
@@ -39,7 +40,8 @@ const RPC_URLS = [
   { label: 'Custom', value: '' },
 ]
 
-const THEMES = ['Light', 'Dark', 'Mango']
+// const THEMES = ['Light', 'Dark', 'Mango']
+const THEMES = ['Light', 'Dark']
 
 export const LANGS = [
   { locale: 'en', name: 'english', description: 'english' },
@@ -70,32 +72,32 @@ const SettingsModal = ({ isOpen, onClose }) => {
   const { t } = useTranslation('common')
   const [settingsView, setSettingsView] = useState('')
   const { theme } = useTheme()
-  const [savedLanguage] = useLocalStorageState('language', '')
-  const [rpcEndpointUrl] = useLocalStorageState(RPC_URL_KEY, ENDPOINTS[0].url)
+  // const [savedLanguage] = useLocalStorageState('language', '')
+  // const [rpcEndpointUrl] = useLocalStorageState(RPC_URL_KEY, ENDPOINTS[0].url)
 
-  const [defaultMarket] = useLocalStorageState(
-    DEFAULT_MARKET_KEY,
-    initialMarket
-  )
-  const [showOrderbookFlash, setShowOrderbookFlash] = useLocalStorageState(
-    ORDERBOOK_FLASH_KEY,
-    true
-  )
+  // const [defaultMarket] = useLocalStorageState(
+  //   DEFAULT_MARKET_KEY,
+  //   initialMarket
+  // )
+  // const [showOrderbookFlash, setShowOrderbookFlash] = useLocalStorageState(
+  //   ORDERBOOK_FLASH_KEY,
+  //   true
+  // )
+  //
+  // const [defaultSpotMargin, setDefaultSpotMargin] = useLocalStorageState(
+  //   DEFAULT_SPOT_MARGIN_KEY,
+  //   false
+  // )
 
-  const [defaultSpotMargin, setDefaultSpotMargin] = useLocalStorageState(
-    DEFAULT_SPOT_MARGIN_KEY,
-    false
-  )
-
-  const rpcEndpoint =
-    RPC_URLS.find((node) => node.value === rpcEndpointUrl) || CUSTOM_RPC
-
-  const savedLanguageName = useMemo(() => {
-    const matchingLang = LANGS.find((l) => l.locale === savedLanguage)
-    if (matchingLang) {
-      return matchingLang.name
-    }
-  }, [savedLanguage])
+  // const rpcEndpoint =
+  //   RPC_URLS.find((node) => node.value === rpcEndpointUrl) || CUSTOM_RPC
+  //
+  // const savedLanguageName = useMemo(() => {
+  //   const matchingLang = LANGS.find((l) => l.locale === savedLanguage)
+  //   if (matchingLang) {
+  //     return matchingLang.name
+  //   }
+  // }, [savedLanguage])
 
   return (
     <Modal isOpen={isOpen} onClose={onClose}>
@@ -113,16 +115,16 @@ const SettingsModal = ({ isOpen, onClose }) => {
       </Modal.Header>
       {!settingsView ? (
         <div className="border-b border-th-bkg-4">
-          <button
-            className="default-transition flex w-full items-center justify-between rounded-none border-t border-th-bkg-4 py-3 font-normal text-th-fgd-1 focus:outline-none md:hover:text-th-primary"
-            onClick={() => setSettingsView('Default Market')}
-          >
-            <span>{t('default-market')}</span>
-            <div className="flex items-center text-xs text-th-fgd-3">
-              {defaultMarket.name}
-              <ChevronRightIcon className="ml-1 h-5 w-5 text-th-fgd-1" />
-            </div>
-          </button>
+          {/*<button*/}
+          {/*  className="default-transition flex w-full items-center justify-between rounded-none border-t border-th-bkg-4 py-3 font-normal text-th-fgd-1 focus:outline-none md:hover:text-th-primary"*/}
+          {/*  onClick={() => setSettingsView('Default Market')}*/}
+          {/*>*/}
+          {/*  <span>{t('default-market')}</span>*/}
+          {/*  <div className="flex items-center text-xs text-th-fgd-3">*/}
+          {/*    {defaultMarket.name}*/}
+          {/*    <ChevronRightIcon className="ml-1 h-5 w-5 text-th-fgd-1" />*/}
+          {/*  </div>*/}
+          {/*</button>*/}
           <button
             className="default-transition flex w-full items-center justify-between rounded-none border-t border-th-bkg-4 py-3 font-normal text-th-fgd-1 focus:outline-none md:hover:text-th-primary"
             onClick={() => setSettingsView('Theme')}
@@ -133,43 +135,45 @@ const SettingsModal = ({ isOpen, onClose }) => {
               <ChevronRightIcon className="ml-1 h-5 w-5 text-th-fgd-1" />
             </div>
           </button>
-          <button
-            className="default-transition flex w-full items-center justify-between rounded-none border-t border-th-bkg-4 py-3 font-normal text-th-fgd-1 focus:outline-none md:hover:text-th-primary"
-            onClick={() => setSettingsView('Language')}
-          >
-            <span>{t('language')}</span>
-            {savedLanguageName ? (
-              <div className="flex items-center text-xs text-th-fgd-3">
-                {t(savedLanguageName)}
-                <ChevronRightIcon className="ml-1 h-5 w-5 text-th-fgd-1" />
-              </div>
-            ) : null}
-          </button>
-          <button
-            className="default-transition flex w-full items-center justify-between rounded-none border-t border-th-bkg-4 py-3 font-normal text-th-fgd-1 focus:outline-none md:hover:text-th-primary"
-            onClick={() => setSettingsView('RPC Endpoint')}
-          >
-            <span>{t('rpc-endpoint')}</span>
-            <div className="flex items-center text-xs text-th-fgd-3">
-              {rpcEndpoint?.label}
-              <ChevronRightIcon className="ml-1 h-5 w-5 text-th-fgd-1" />
-            </div>
-          </button>
-          <div className="flex items-center justify-between border-t border-th-bkg-4 py-3 text-th-fgd-1">
-            <span>{t('orderbook-animation')}</span>
-            <Switch
-              checked={showOrderbookFlash}
-              onChange={(checked) => setShowOrderbookFlash(checked)}
-            />
-          </div>
+          {/*<button*/}
+          {/*  className="default-transition flex w-full items-center justify-between rounded-none border-t border-th-bkg-4 py-3 font-normal text-th-fgd-1 focus:outline-none md:hover:text-th-primary"*/}
+          {/*  onClick={() => setSettingsView('Language')}*/}
+          {/*>*/}
+          {/*  <span>{t('language')}</span>*/}
+          {/*  {savedLanguageName ? (*/}
+          {/*    <div className="flex items-center text-xs text-th-fgd-3">*/}
+          {/*      {t(savedLanguageName)}*/}
+          {/*      <ChevronRightIcon className="ml-1 h-5 w-5 text-th-fgd-1" />*/}
+          {/*    </div>*/}
+          {/*  ) : null}*/}
+          {/*</button>*/}
 
-          <div className="flex items-center justify-between border-t border-th-bkg-4 py-3 text-th-fgd-1">
-            <span>{t('default-spot-margin')}</span>
-            <Switch
-              checked={defaultSpotMargin}
-              onChange={(checked) => setDefaultSpotMargin(checked)}
-            />
-          </div>
+          {/*<button*/}
+          {/*  className="default-transition flex w-full items-center justify-between rounded-none border-t border-th-bkg-4 py-3 font-normal text-th-fgd-1 focus:outline-none md:hover:text-th-primary"*/}
+          {/*  onClick={() => setSettingsView('RPC Endpoint')}*/}
+          {/*>*/}
+          {/*  <span>{t('rpc-endpoint')}</span>*/}
+          {/*  <div className="flex items-center text-xs text-th-fgd-3">*/}
+          {/*    {rpcEndpoint?.label}*/}
+          {/*    <ChevronRightIcon className="ml-1 h-5 w-5 text-th-fgd-1" />*/}
+          {/*  </div>*/}
+          {/*</button>*/}
+
+          {/*<div className="flex items-center justify-between border-t border-th-bkg-4 py-3 text-th-fgd-1">*/}
+          {/*  <span>{t('orderbook-animation')}</span>*/}
+          {/*  <Switch*/}
+          {/*    checked={showOrderbookFlash}*/}
+          {/*    onChange={(checked) => setShowOrderbookFlash(checked)}*/}
+          {/*  />*/}
+          {/*</div>*/}
+
+          {/*<div className="flex items-center justify-between border-t border-th-bkg-4 py-3 text-th-fgd-1">*/}
+          {/*  <span>{t('default-spot-margin')}</span>*/}
+          {/*  <Switch*/}
+          {/*    checked={defaultSpotMargin}*/}
+          {/*    onChange={(checked) => setDefaultSpotMargin(checked)}*/}
+          {/*  />*/}
+          {/*</div>*/}
         </div>
       ) : null}
       <SettingsContent

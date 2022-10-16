@@ -1,20 +1,20 @@
 import Link from 'next/link'
 import useLocalStorageState from 'hooks/useLocalStorageState'
 import { DEFAULT_MARKET_KEY, initialMarket } from './SettingsModal'
-import { BtcMonoIcon, TradeIcon, TrophyIcon } from './icons'
+// import { BtcMonoIcon, TradeIcon, TrophyIcon } from './icons'
 import {
-  CashIcon,
+  // CashIcon,
   ChartBarIcon,
-  CurrencyDollarIcon,
-  DotsHorizontalIcon,
-  SwitchHorizontalIcon,
-  CalculatorIcon,
-  LibraryIcon,
-  LightBulbIcon,
-  UserAddIcon,
+  // CurrencyDollarIcon,
+  // DotsHorizontalIcon,
+  // SwitchHorizontalIcon,
+  // CalculatorIcon,
+  // LibraryIcon,
+  // LightBulbIcon,
+  // UserAddIcon,
   ExternalLinkIcon,
   ChevronDownIcon,
-  ReceiptTaxIcon,
+  // ReceiptTaxIcon,
 } from '@heroicons/react/solid'
 import { useRouter } from 'next/router'
 import AccountOverviewPopover from './AccountOverviewPopover'
@@ -50,11 +50,13 @@ const SideNav = ({ collapsed }) => {
             className={`flex h-14 w-full items-center justify-start border-b border-th-bkg-3 px-4`}
           >
             <div className={`flex flex-shrink-0 cursor-pointer items-center`}>
-              <img
-                className={`h-8 w-auto`}
-                src="/assets/icons/logo.svg"
-                alt="next"
-              />
+              {/* TODO: add image */}
+              {/*<img*/}
+              {/*  className={`h-8 w-auto`}*/}
+              {/*  src="/assets/icons/logo.svg"*/}
+              {/*  alt="next"*/}
+              {/*/>*/}
+
               <Transition
                 appear={true}
                 show={!collapsed}
@@ -67,7 +69,7 @@ const SideNav = ({ collapsed }) => {
                 leaveTo="opacity-0"
               >
                 <span className="ml-2 text-lg font-bold text-th-fgd-1">
-                  Mango
+                  XRPL Sniper
                 </span>
               </Transition>
             </div>
@@ -77,98 +79,107 @@ const SideNav = ({ collapsed }) => {
           <MenuItem
             active={pathname === '/'}
             collapsed={collapsed}
-            icon={<TradeIcon className="h-5 w-5" />}
-            title={t('trade')}
-            pagePath="/"
-          />
-          <MenuItem
-            active={pathname === '/account'}
-            collapsed={collapsed}
-            icon={<CurrencyDollarIcon className="h-5 w-5" />}
-            title={t('account')}
-            pagePath="/account"
-          />
-          <MenuItem
-            active={pathname === '/markets'}
-            collapsed={collapsed}
-            icon={<BtcMonoIcon className="h-4 w-4" />}
-            title={t('markets')}
-            pagePath="/markets"
-          />
-          <MenuItem
-            active={pathname === '/borrow'}
-            collapsed={collapsed}
-            icon={<CashIcon className="h-5 w-5" />}
-            title={t('borrow')}
-            pagePath="/borrow"
-          />
-          <MenuItem
-            active={pathname === '/swap'}
-            collapsed={collapsed}
-            icon={<SwitchHorizontalIcon className="h-5 w-5" />}
-            title={t('swap')}
-            pagePath="/swap"
-          />
-          <MenuItem
-            active={pathname === '/stats'}
-            collapsed={collapsed}
             icon={<ChartBarIcon className="h-5 w-5" />}
             title={t('stats')}
             pagePath="/stats"
           />
-          <MenuItem
-            active={pathname === '/leaderboard'}
-            collapsed={collapsed}
-            icon={<TrophyIcon className="h-[18px] w-[18px]" />}
-            title={t('leaderboard')}
-            pagePath="/leaderboard"
-          />
-          <ExpandableMenuItem
-            collapsed={collapsed}
-            icon={<DotsHorizontalIcon className="h-5 w-5" />}
-            title={t('more')}
-          >
-            <MenuItem
-              active={pathname === '/referral'}
-              collapsed={false}
-              icon={<UserAddIcon className="h-4 w-4" />}
-              title={t('referrals')}
-              pagePath="/referral"
-              hideIconBg
-            />
-            <MenuItem
-              active={pathname === '/risk-calculator'}
-              collapsed={false}
-              icon={<CalculatorIcon className="h-4 w-4" />}
-              title={t('calculator')}
-              pagePath="/risk-calculator"
-              hideIconBg
-            />
-            <MenuItem
-              active={pathname === '/fees'}
-              collapsed={false}
-              icon={<ReceiptTaxIcon className="h-4 w-4" />}
-              title={t('fees')}
-              pagePath="/fees"
-              hideIconBg
-            />
-            <MenuItem
-              collapsed={false}
-              icon={<LightBulbIcon className="h-4 w-4" />}
-              title={t('learn')}
-              pagePath="https://docs.mango.markets"
-              hideIconBg
-              isExternal
-            />
-            <MenuItem
-              collapsed={false}
-              icon={<LibraryIcon className="h-4 w-4" />}
-              title={t('governance')}
-              pagePath="https://dao.mango.markets"
-              hideIconBg
-              isExternal
-            />
-          </ExpandableMenuItem>
+
+          {/*<MenuItem*/}
+          {/*  active={pathname === '/'}*/}
+          {/*  collapsed={collapsed}*/}
+          {/*  icon={<TradeIcon className="h-5 w-5" />}*/}
+          {/*  title={t('trade')}*/}
+          {/*  pagePath="/"*/}
+          {/*/>*/}
+          {/*<MenuItem*/}
+          {/*  active={pathname === '/account'}*/}
+          {/*  collapsed={collapsed}*/}
+          {/*  icon={<CurrencyDollarIcon className="h-5 w-5" />}*/}
+          {/*  title={t('account')}*/}
+          {/*  pagePath="/account"*/}
+          {/*/>*/}
+          {/*<MenuItem*/}
+          {/*  active={pathname === '/markets'}*/}
+          {/*  collapsed={collapsed}*/}
+          {/*  icon={<BtcMonoIcon className="h-4 w-4" />}*/}
+          {/*  title={t('markets')}*/}
+          {/*  pagePath="/markets"*/}
+          {/*/>*/}
+          {/*<MenuItem*/}
+          {/*  active={pathname === '/borrow'}*/}
+          {/*  collapsed={collapsed}*/}
+          {/*  icon={<CashIcon className="h-5 w-5" />}*/}
+          {/*  title={t('borrow')}*/}
+          {/*  pagePath="/borrow"*/}
+          {/*/>*/}
+          {/*<MenuItem*/}
+          {/*  active={pathname === '/swap'}*/}
+          {/*  collapsed={collapsed}*/}
+          {/*  icon={<SwitchHorizontalIcon className="h-5 w-5" />}*/}
+          {/*  title={t('swap')}*/}
+          {/*  pagePath="/swap"*/}
+          {/*/>*/}
+          {/*<MenuItem*/}
+          {/*  active={pathname === '/stats'}*/}
+          {/*  collapsed={collapsed}*/}
+          {/*  icon={<ChartBarIcon className="h-5 w-5" />}*/}
+          {/*  title={t('stats')}*/}
+          {/*  pagePath="/stats"*/}
+          {/*/>*/}
+          {/*<MenuItem*/}
+          {/*  active={pathname === '/leaderboard'}*/}
+          {/*  collapsed={collapsed}*/}
+          {/*  icon={<TrophyIcon className="h-[18px] w-[18px]" />}*/}
+          {/*  title={t('leaderboard')}*/}
+          {/*  pagePath="/leaderboard"*/}
+          {/*/>*/}
+
+          {/*  <ExpandableMenuItem*/}
+          {/*    collapsed={collapsed}*/}
+          {/*    icon={<DotsHorizontalIcon className="h-5 w-5" />}*/}
+          {/*    title={t('more')}*/}
+          {/*  >*/}
+          {/*    <MenuItem*/}
+          {/*      active={pathname === '/referral'}*/}
+          {/*      collapsed={false}*/}
+          {/*      icon={<UserAddIcon className="h-4 w-4" />}*/}
+          {/*      title={t('referrals')}*/}
+          {/*      pagePath="/referral"*/}
+          {/*      hideIconBg*/}
+          {/*    />*/}
+          {/*    <MenuItem*/}
+          {/*      active={pathname === '/risk-calculator'}*/}
+          {/*      collapsed={false}*/}
+          {/*      icon={<CalculatorIcon className="h-4 w-4" />}*/}
+          {/*      title={t('calculator')}*/}
+          {/*      pagePath="/risk-calculator"*/}
+          {/*      hideIconBg*/}
+          {/*    />*/}
+          {/*    <MenuItem*/}
+          {/*      active={pathname === '/fees'}*/}
+          {/*      collapsed={false}*/}
+          {/*      icon={<ReceiptTaxIcon className="h-4 w-4" />}*/}
+          {/*      title={t('fees')}*/}
+          {/*      pagePath="/fees"*/}
+          {/*      hideIconBg*/}
+          {/*    />*/}
+          {/*    <MenuItem*/}
+          {/*      collapsed={false}*/}
+          {/*      icon={<LightBulbIcon className="h-4 w-4" />}*/}
+          {/*      title={t('learn')}*/}
+          {/*      pagePath="https://docs.mango.markets"*/}
+          {/*      hideIconBg*/}
+          {/*      isExternal*/}
+          {/*    />*/}
+          {/*    <MenuItem*/}
+          {/*      collapsed={false}*/}
+          {/*      icon={<LibraryIcon className="h-4 w-4" />}*/}
+          {/*      title={t('governance')}*/}
+          {/*      pagePath="https://dao.mango.markets"*/}
+          {/*      hideIconBg*/}
+          {/*      isExternal*/}
+          {/*    />*/}
+          {/*  </ExpandableMenuItem>*/}
         </div>
       </div>
       <AccountSummaryPanel collapsed={collapsed} />

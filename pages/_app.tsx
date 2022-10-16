@@ -9,8 +9,8 @@ import '../styles/datepicker.css'
 import useHydrateStore from '../hooks/useHydrateStore'
 import Notifications from '../components/Notification'
 import useMangoStore, { CLUSTER } from '../stores/useMangoStore'
-import useOraclePrice from '../hooks/useOraclePrice'
-import { getDecimalCount } from '../utils'
+// import useOraclePrice from '../hooks/useOraclePrice'
+// import { getDecimalCount } from '../utils'
 import { useRouter } from 'next/router'
 import { ViewportProvider } from '../hooks/useViewport'
 import { appWithTranslation } from 'next-i18next'
@@ -127,23 +127,24 @@ const FetchReferrer = () => {
 }
 
 const PageTitle = () => {
-  const router = useRouter()
-  const marketConfig = useMangoStore((s) => s.selectedMarket.config)
-  const market = useMangoStore((s) => s.selectedMarket.current)
-  const oraclePrice = useOraclePrice()
-  const selectedMarketName = marketConfig.name
-  const marketTitleString =
-    marketConfig && router.pathname == '/'
-      ? `${
-          oraclePrice
-            ? oraclePrice.toFixed(getDecimalCount(market?.tickSize)) + ' | '
-            : ''
-        }${selectedMarketName} - `
-      : ''
+  // const router = useRouter()
+  // const marketConfig = useMangoStore((s) => s.selectedMarket.config)
+  // const market = useMangoStore((s) => s.selectedMarket.current)
+  // const oraclePrice = useOraclePrice()
+  // const selectedMarketName = marketConfig.name
+  // const marketTitleString =
+  //   marketConfig && router.pathname == '/'
+  //     ? `${
+  //         oraclePrice
+  //           ? oraclePrice.toFixed(getDecimalCount(market?.tickSize)) + ' | '
+  //           : ''
+  //       }${selectedMarketName} - `
+  //     : ''
 
   return (
     <Head>
-      <title>{marketTitleString}Mango Markets</title>
+      {/*<title>{marketTitleString}Mango Markets</title>*/}
+      <title>XRPL Sniper</title>
     </Head>
   )
 }

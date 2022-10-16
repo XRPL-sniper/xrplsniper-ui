@@ -183,17 +183,17 @@ function App({ Component, pageProps }) {
   return (
     <>
       <Head>
-        <title>Mango Markets</title>
+        <title>XRPL Sniper</title>
         <link rel="icon" href="/favicon.ico" />
-        <meta property="og:title" content="Mango Markets" />
+        <meta property="og:title" content="XRPL Sniper" />
         <meta name="viewport" content="width=device-width, initial-scale=1" />
         <meta
           name="keywords"
-          content="Mango Markets, Serum, SRM, Serum DEX, DEFI, Decentralized Finance, Decentralised Finance, Crypto, ERC20, Ethereum, Decentralize, Solana, SOL, SPL, Cross-Chain, Trading, Fastest, Fast, SerumBTC, SerumUSD, SRM Tokens, SPL Tokens"
+          content="XRPL Sniper, nft rarity ranking, nft stats"
         />
         <meta
           name="description"
-          content="Mango Markets - Decentralised, cross-margin trading up to 10x leverage with lightning speed and near-zero fees."
+          content="XRPL Sniper - NFT Rarity ranking and NFT Statistic service on XRPL."
         />
         <link
           rel="apple-touch-icon"
@@ -206,7 +206,7 @@ function App({ Component, pageProps }) {
         <meta name="twitter:title" content="Mango Markets" />
         <meta
           name="twitter:description"
-          content="Mango Markets - Decentralised, cross-margin trading up to 20x leverage with lightning speed and near-zero fees."
+          content="XRPL Sniper - NFT Rarity ranking and NFT Statistic service on XRPL."
         />
         <meta
           name="twitter:image"
@@ -217,7 +217,7 @@ function App({ Component, pageProps }) {
       </Head>
       <Script
         strategy="lazyOnload"
-        src="https://www.googletagmanager.com/gtag/js?id=G-DH0283BKHZ"
+        src="https://www.googletagmanager.com/gtag/js?id=GTM-T7TLZ7D"
       ></Script>
       <Script strategy="lazyOnload">
         {`
@@ -225,10 +225,10 @@ function App({ Component, pageProps }) {
           function gtag(){dataLayer.push(arguments);}
           gtag('js', new Date());
 
-          gtag('config', 'G-DH0283BKHZ');
+          gtag('config', 'GTM-T7TLZ7D');
         `}
       </Script>
-      <ThemeProvider defaultTheme="Mango">
+      <ThemeProvider defaultTheme="Dark">
         <ErrorBoundary>
           <WalletProvider wallets={wallets}>
             <PageTitle />

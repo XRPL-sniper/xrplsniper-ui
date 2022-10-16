@@ -1,7 +1,7 @@
 {
-  "short_name": "Mango",
-  "name": "Mango Markets",
-  "description": "Mango Markets - Decentralised, cross-margin trading up to 5x leverage with lightning speed and near-zero fees powered by Serum",
+  "short_name": "XRPLSniper",
+  "name": "XRPL Sniper",
+  "description": "XRPL Sniper - NFT Rarity ranking and NFT Statistic service on XRPL.",
   "icons": [
     {
       "src": "192x192.png",

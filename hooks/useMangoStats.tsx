@@ -45,6 +45,8 @@ const useMangoStats = () => {
           `https://mango-transaction-log.herokuapp.com/v3/stats/spot_stats_hourly?mango-group=${mangoGroupName}`
         )
         const stats = await response.json()
+        console.log(mangoGroupName)
+        console.log(stats)
         setStats(stats)
         setLoadHistoricalStats(false)
       } catch {

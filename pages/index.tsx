@@ -1,17 +1,18 @@
 import { useEffect, useState } from 'react'
-import StatsTotals from '../components/stats_page/StatsTotals'
-import StatsAssets from '../components/stats_page/StatsAssets'
-import StatsPerps from '../components/stats_page/StatsPerps'
-import useMangoStats from '../hooks/useMangoStats'
-import Swipeable from '../components/mobile/Swipeable'
-import SwipeableTabs from '../components/mobile/SwipeableTabs'
-import Tabs from '../components/Tabs'
-import { useViewport } from '../hooks/useViewport'
-import { breakpoints } from '../components/TradePageGrid'
+import StatsTotals from 'components/stats_page/StatsTotals'
+import StatsAssets from 'components/stats_page/StatsAssets'
+import StatsPerps from 'components/stats_page/StatsPerps'
+import useMangoStats from 'hooks/useMangoStats'
+import Swipeable from 'components/mobile/Swipeable'
+import SwipeableTabs from 'components/mobile/SwipeableTabs'
+import Tabs from 'components/Tabs'
+import { useViewport } from 'hooks/useViewport'
+import { breakpoints } from 'components/TradePageGrid'
 import { serverSideTranslations } from 'next-i18next/serverSideTranslations'
 import { useTranslation } from 'next-i18next'
 import useLocalStorageState from 'hooks/useLocalStorageState'
 import dayjs from 'dayjs'
+import useSummaryStats from "../hooks/useSummaryStats";
 
 export async function getStaticProps({ locale }) {
   return {
@@ -37,6 +38,7 @@ export default function StatsPage() {
     loadHistoricalStats,
     loadPerpStats,
   } = useMangoStats()
+  const {latestSummary, loadSummary} = useSummaryStats()
   const [viewIndex, setViewIndex] = useState(0)
   const [activeTab, setActiveTab] = useState(TABS[0])
   const { width } = useViewport()
@@ -72,6 +74,8 @@ export default function StatsPage() {
       )}
       {!isMobile ? (
         <TabContent
+            loadSummary={loadSummary}
+            latestSummary={latestSummary}
           activeTab={activeTab}
           latestStats={latestStats}
           perpStats={perpStats}
@@ -83,6 +87,8 @@ export default function StatsPage() {
       ) : (
         <Swipeable index={viewIndex} onChangeIndex={handleChangeViewIndex}>
           <StatsTotals
+              loadSummary={loadSummary}
+              latestSummary={latestSummary}
             latestStats={latestStats}
             stats={stats}
             loadHistoricalStats={loadHistoricalStats}
@@ -108,11 +114,15 @@ const TabContent = ({
   loadHistoricalStats,
   loadPerpStats,
   loadLatestStats,
+    latestSummary,
+    loadSummary
 }) => {
   switch (activeTab) {
     case 'Totals':
       return (
         <StatsTotals
+            loadSummary={loadSummary}
+            latestSummary={latestSummary}
           latestStats={latestStats}
           stats={stats}
           loadHistoricalStats={loadHistoricalStats}
@@ -132,6 +142,8 @@ const TabContent = ({
     default:
       return (
         <StatsTotals
+            loadSummary={loadSummary}
+            latestSummary={latestSummary}
           latestStats={latestStats}
           stats={stats}
           loadHistoricalStats={loadHistoricalStats}

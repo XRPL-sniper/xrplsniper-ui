@@ -80,8 +80,8 @@ const SideNav = ({ collapsed }) => {
             active={pathname === '/'}
             collapsed={collapsed}
             icon={<ChartBarIcon className="h-5 w-5" />}
-            title={t('stats')}
-            pagePath="/stats"
+            title={t('Collections')}
+            pagePath="/collection"
           />
 
           {/*<MenuItem*/}

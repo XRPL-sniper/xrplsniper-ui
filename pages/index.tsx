@@ -27,7 +27,7 @@ export async function getStaticProps({ locale }) {
   }
 }
 
-export default function StatsPage() {
+export default function IndexPage() {
   const { t } = useTranslation('common')
   const TABS = ['Totals', 'Assets', 'Perps']
   const {

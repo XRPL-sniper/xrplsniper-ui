@@ -1175,6 +1175,7 @@ const useMangoStore = create<
 
             const data = await Promise.all(promises)
             for (let i = 0; i < data.length; i++) {
+              // @ts-ignore
               data[i].symbol = coingeckoIds[i].symbol
             }
             set((state) => {

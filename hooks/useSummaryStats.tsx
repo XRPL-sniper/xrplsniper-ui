@@ -25,7 +25,7 @@ const useSummaryStats = () => {
                 )
                 const stats = await response.json()
                 console.log(stats)
-                setLatestSummary(stats['summary'])
+                setLatestSummary(stats['transaction_history_stats'])
                 setLoadSummary(false)
             } catch {
                 setLoadSummary(false)

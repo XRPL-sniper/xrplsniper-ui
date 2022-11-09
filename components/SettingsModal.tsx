@@ -45,14 +45,14 @@ const THEMES = ['Light', 'Dark']
 
 export const LANGS = [
   { locale: 'en', name: 'english', description: 'english' },
-  { locale: 'es', name: 'spanish', description: 'spanish' },
-  { locale: 'ru', name: 'russian', description: 'russian' },
-  {
-    locale: 'zh_tw',
-    name: 'chinese-traditional',
-    description: 'traditional chinese',
-  },
-  { locale: 'zh', name: 'chinese', description: 'simplified chinese' },
+  // { locale: 'es', name: 'spanish', description: 'spanish' },
+  // { locale: 'ru', name: 'russian', description: 'russian' },
+  // {
+  //   locale: 'zh_tw',
+  //   name: 'chinese-traditional',
+  //   description: 'traditional chinese',
+  // },
+  // { locale: 'zh', name: 'chinese', description: 'simplified chinese' },
 ]
 
 const CUSTOM_RPC = RPC_URLS.find((n) => n.label === 'Custom')

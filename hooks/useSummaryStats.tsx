@@ -21,7 +21,7 @@ const useSummaryStats = () => {
             setLoadSummary(true)
             try {
                 const response = await fetch(
-                    'http://localhost:8000/api/transactions/history/stat'
+                    'https://api.xrplsniper.xyz/api/transactions/history/stat'
                 )
                 const stats = await response.json()
                 console.log(stats)

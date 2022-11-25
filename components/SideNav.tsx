@@ -249,8 +249,8 @@ const AccountSummaryPanel = ({ collapsed }) => {
 
   return (
     <div className="flex min-h-[64px] w-full items-center border-t border-th-bkg-3 ">
-      <div>
-        asdf
+      <div className='hidden'>
+        {collapsed}
       </div>
       {/*<ExpandableMenuItem*/}
       {/*  collapsed={collapsed}*/}

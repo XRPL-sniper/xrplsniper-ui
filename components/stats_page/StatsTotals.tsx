@@ -16,44 +16,44 @@ interface Points {
     time: string
 }
 
-function formatNumberString(x: number, decimals): string {
-    return new Intl.NumberFormat('en-US', {
-        minimumFractionDigits: decimals,
-        maximumFractionDigits: decimals,
-    }).format(x)
-}
+// function formatNumberString(x: number, decimals): string {
+//     return new Intl.NumberFormat('en-US', {
+//         minimumFractionDigits: decimals,
+//         maximumFractionDigits: decimals,
+//     }).format(x)
+// }
 
-const getAverageStats = (
-    stats: any[],
-    daysAgo: number,
-    symbol: string,
-    type: string
-): string => {
-    if (stats.length > 0) {
-        const priorDate = new Date(Date.now() - daysAgo * 24 * 60 * 60 * 1000)
-        const selectedStatsData = stats.filter((s) => s.name === symbol)
-        const timeFilteredStats = selectedStatsData.filter(
-            (d) => new Date(d.time).getTime() >= priorDate.getTime()
-        )
-        const oldestStat = timeFilteredStats[0]
-        const latestStat = timeFilteredStats[timeFilteredStats.length - 1]
-        let avg
-        if (latestStat && oldestStat && type in latestStat && type in oldestStat) {
-            avg =
-                Math.pow(latestStat[type] / oldestStat[type], 365 / daysAgo) * 100 - 100
-        }
-
-        priorDate.setHours(priorDate.getHours() + 1)
-
-        if (new Date(oldestStat?.hourly).getDate() > priorDate.getDate()) {
-            return '-'
-        }
-        if (avg) {
-            return `${avg.toFixed(4)}%`
-        }
-    }
-    return '-'
-}
+// const getAverageStats = (
+//     stats: any[],
+//     daysAgo: number,
+//     symbol: string,
+//     type: string
+// ): string => {
+//     if (stats.length > 0) {
+//         const priorDate = new Date(Date.now() - daysAgo * 24 * 60 * 60 * 1000)
+//         const selectedStatsData = stats.filter((s) => s.name === symbol)
+//         const timeFilteredStats = selectedStatsData.filter(
+//             (d) => new Date(d.time).getTime() >= priorDate.getTime()
+//         )
+//         const oldestStat = timeFilteredStats[0]
+//         const latestStat = timeFilteredStats[timeFilteredStats.length - 1]
+//         let avg
+//         if (latestStat && oldestStat && type in latestStat && type in oldestStat) {
+//             avg =
+//                 Math.pow(latestStat[type] / oldestStat[type], 365 / daysAgo) * 100 - 100
+//         }
+//
+//         priorDate.setHours(priorDate.getHours() + 1)
+//
+//         if (new Date(oldestStat?.hourly).getDate() > priorDate.getDate()) {
+//             return '-'
+//         }
+//         if (avg) {
+//             return `${avg.toFixed(4)}%`
+//         }
+//     }
+//     return '-'
+// }
 
 export default function StatsTotals(
     {

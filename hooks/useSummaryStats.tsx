@@ -1,3 +1,4 @@
+import {api_host} from "../utils/consts"
 import { useEffect, useState } from 'react'
 
 const useSummaryStats = () => {
@@ -21,7 +22,7 @@ const useSummaryStats = () => {
             setLoadSummary(true)
             try {
                 const response = await fetch(
-                    'https://api.xrplsniper.xyz/api/transactions/history/stat'
+                    `${api_host}/api/transactions/history/stat`
                 )
                 const stats = await response.json()
                 console.log(stats)

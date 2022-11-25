@@ -1,10 +1,4 @@
-import { I80F48 } from '@blockworks-foundation/mango-client'
-import { TOKEN_MINTS } from '@project-serum/serum'
-import { PublicKey } from '@solana/web3.js'
 import BN from 'bn.js'
-import { TRIGGER_ORDER_TYPES } from '../components/trade_form/AdvancedTradeForm'
-import { Orderbook } from '../stores/useMangoStore'
-import { MarketKind } from '@blockworks-foundation/mango-client'
 import BigNumber from 'bignumber.js'
 
 export async function sleep(ms) {
@@ -72,11 +66,6 @@ export function getTokenMultiplierFromDecimals(decimals: number): BN {
   return new BN(10).pow(new BN(decimals))
 }
 
-export function abbreviateAddress(address: PublicKey, size = 5) {
-  const base58 = address.toBase58()
-  return base58.slice(0, size) + '…' + base58.slice(-size)
-}
-
 export function isEqual(obj1, obj2, keys) {
   if (!keys && Object.keys(obj1).length !== Object.keys(obj2).length) {
     return false
@@ -109,54 +98,54 @@ export function isDefined<T>(argument: T | undefined): argument is T {
   return argument !== undefined
 }
 
-export function calculateTradePrice(
-  kind: MarketKind,
-  tradeType: string,
-  orderBook: Orderbook,
-  baseSize: number,
-  side: 'buy' | 'sell',
-  price: string | number,
-  triggerPrice?: string | number
-): number | undefined {
-  if (tradeType === 'Market' && kind === 'spot') {
-    return calculateMarketPrice(orderBook, baseSize, side)
-  } else if (TRIGGER_ORDER_TYPES.includes(tradeType)) {
-    if (tradeType === 'Take Profit Limit' || tradeType === 'Stop Limit') {
-      return Number(price)
-    } else {
-      return Number(triggerPrice)
-    }
-  }
-  return Number(price)
-}
-
-export const calculateMarketPrice = (
-  orderBook: Orderbook,
-  size: number,
-  side: 'buy' | 'sell'
-): number | undefined => {
-  const orders = side === 'buy' ? orderBook.asks : orderBook.bids
-  let acc = 0
-  let selectedOrder
-  for (const order of orders) {
-    acc += order[1]
-    if (acc >= size) {
-      selectedOrder = order
-      break
-    }
-  }
-
-  if (!selectedOrder) {
-    console.error('Orderbook empty no market price available')
-    return
-  }
-
-  if (side === 'buy') {
-    return selectedOrder[0] * 1.05
-  } else {
-    return selectedOrder[0] * 0.95
-  }
-}
+// export function calculateTradePrice(
+//   kind: MarketKind,
+//   tradeType: string,
+//   orderBook: Orderbook,
+//   baseSize: number,
+//   side: 'buy' | 'sell',
+//   price: string | number,
+//   triggerPrice?: string | number
+// ): number | undefined {
+//   if (tradeType === 'Market' && kind === 'spot') {
+//     return calculateMarketPrice(orderBook, baseSize, side)
+//   } else if (TRIGGER_ORDER_TYPES.includes(tradeType)) {
+//     if (tradeType === 'Take Profit Limit' || tradeType === 'Stop Limit') {
+//       return Number(price)
+//     } else {
+//       return Number(triggerPrice)
+//     }
+//   }
+//   return Number(price)
+// }
+//
+// export const calculateMarketPrice = (
+//   orderBook: Orderbook,
+//   size: number,
+//   side: 'buy' | 'sell'
+// ): number | undefined => {
+//   const orders = side === 'buy' ? orderBook.asks : orderBook.bids
+//   let acc = 0
+//   let selectedOrder
+//   for (const order of orders) {
+//     acc += order[1]
+//     if (acc >= size) {
+//       selectedOrder = order
+//       break
+//     }
+//   }
+//
+//   if (!selectedOrder) {
+//     console.error('Orderbook empty no market price available')
+//     return
+//   }
+//
+//   if (side === 'buy') {
+//     return selectedOrder[0] * 1.05
+//   } else {
+//     return selectedOrder[0] * 0.95
+//   }
+// }
 
 // Precision for our mango group token
 export const tokenPrecision = {
@@ -211,13 +200,13 @@ const tokenPricePrecision = {
   GMT: 4,
 }
 
-export const getSymbolForTokenMintAddress = (address: string): string => {
-  if (address && address.length) {
-    return TOKEN_MINTS.find((m) => m.address.toString() === address)?.name || ''
-  } else {
-    return ''
-  }
-}
+// export const getSymbolForTokenMintAddress = (address: string): string => {
+//   if (address && address.length) {
+//     return TOKEN_MINTS.find((m) => m.address.toString() === address)?.name || ''
+//   } else {
+//     return ''
+//   }
+// }
 
 export const capitalize = (s) => {
   if (typeof s !== 'string') return ''
@@ -258,9 +247,9 @@ export const trimDecimals = (n, digits) => {
   return temp / step
 }
 
-export const i80f48ToPercent = (value: I80F48) =>
-  value.mul(I80F48.fromNumber(100))
-
+// export const i80f48ToPercent = (value: I80F48) =>
+//   value.mul(I80F48.fromNumber(100))
+//
 export const usdFormatter = (value, decimals = 2, currency = true) => {
   if (decimals === 0) {
     value = Math.abs(value)
@@ -344,14 +333,14 @@ export function roundPerpSize(size: number, symbol: string) {
 /**
  * Check if passed address is Solana address
  */
-export const isValidSolanaAddress = (address: string) => {
-  try {
-    // this fn accepts Base58 character
-    // and if it pass we suppose Solana address is valid
-    new PublicKey(address)
-    return true
-  } catch (error) {
-    // Non-base58 character or can't be used as Solana address
-    return false
-  }
-}
+// export const isValidSolanaAddress = (address: string) => {
+//   try {
+//     // this fn accepts Base58 character
+//     // and if it pass we suppose Solana address is valid
+//     new PublicKey(address)
+//     return true
+//   } catch (error) {
+//     // Non-base58 character or can't be used as Solana address
+//     return false
+//   }
+// }

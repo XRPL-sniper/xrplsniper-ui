@@ -1,6 +1,6 @@
 import { serverSideTranslations } from 'next-i18next/serverSideTranslations'
 import { useTranslation } from 'next-i18next'
-import { RektIcon } from '../components/icons'
+import { RektIcon } from '../components'
 
 export async function getStaticProps({ locale }) {
   return {

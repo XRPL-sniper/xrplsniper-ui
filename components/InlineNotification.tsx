@@ -1,4 +1,4 @@
-import { FunctionComponent } from 'react'
+import { FC } from 'react'
 import {
   CheckCircleIcon,
   ExclamationCircleIcon,
@@ -12,7 +12,7 @@ interface InlineNotificationProps {
   type: string
 }
 
-const InlineNotification: FunctionComponent<InlineNotificationProps> = ({
+const InlineNotification: FC<InlineNotificationProps> = ({
   desc,
   title,
   type,

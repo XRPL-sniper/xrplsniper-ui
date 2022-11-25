@@ -1,261 +1,90 @@
 import Head from 'next/head'
-import { ThemeProvider } from 'next-themes'
+import {ThemeProvider} from 'next-themes'
 import '../node_modules/react-grid-layout/css/styles.css'
 import '../node_modules/react-resizable/css/styles.css'
 import 'intro.js/introjs.css'
 import '../styles/index.css'
 import 'react-nice-dates/build/style.css'
 import '../styles/datepicker.css'
-import useHydrateStore from '../hooks/useHydrateStore'
-import Notifications from '../components/Notification'
-import useMangoStore, { CLUSTER } from '../stores/useMangoStore'
-// import useOraclePrice from '../hooks/useOraclePrice'
-// import { getDecimalCount } from '../utils'
-import { useRouter } from 'next/router'
-import { ViewportProvider } from '../hooks/useViewport'
-import { appWithTranslation } from 'next-i18next'
-import ErrorBoundary from '../components/ErrorBoundary'
-import { useOpenOrders } from '../hooks/useOpenOrders'
-import usePerpPositions from '../hooks/usePerpPositions'
-import { useEffect, useMemo } from 'react'
-import { PublicKey } from '@solana/web3.js'
-import { connectionSelector, mangoGroupSelector } from '../stores/selectors'
-import {
-  ReferrerIdRecordLayout,
-  ReferrerIdRecord,
-} from '@blockworks-foundation/mango-client'
-import useTradeHistory from '../hooks/useTradeHistory'
-import * as Sentry from '@sentry/react'
-import { BrowserTracing } from '@sentry/tracing'
-
-import { WalletProvider, WalletListener } from 'components/WalletAdapter'
-import {
-  BackpackWalletAdapter,
-  CoinbaseWalletAdapter,
-  ExodusWalletAdapter,
-  PhantomWalletAdapter,
-  SolflareWalletAdapter,
-  SolletWalletAdapter,
-  SlopeWalletAdapter,
-  BitpieWalletAdapter,
-  GlowWalletAdapter,
-  WalletConnectWalletAdapter,
-} from '@solana/wallet-adapter-wallets'
-import { WalletAdapterNetwork } from '@solana/wallet-adapter-base'
-import { HuobiWalletAdapter } from '@solana/wallet-adapter-huobi'
-import useSpotBalances from 'hooks/useSpotBalances'
+import {ViewportProvider} from '../hooks/useViewport'
+import {appWithTranslation} from 'next-i18next'
 import Layout from 'components/Layout'
 import Script from 'next/script'
 
-const SENTRY_URL = process.env.NEXT_PUBLIC_SENTRY_URL
-if (SENTRY_URL) {
-  Sentry.init({
-    dsn: SENTRY_URL,
-    integrations: [new BrowserTracing()],
-  })
-}
-
-const MangoStoreUpdater = () => {
-  useHydrateStore()
-  return null
-}
-
-const OpenOrdersStoreUpdater = () => {
-  useOpenOrders()
-  return null
-}
-
-const SpotBalancesStoreUpdater = () => {
-  useSpotBalances()
-  return null
-}
-
-const PerpPositionsStoreUpdater = () => {
-  usePerpPositions()
-  return null
-}
-
-const TradeHistoryStoreUpdater = () => {
-  useTradeHistory()
-  return null
-}
-
-const FetchReferrer = () => {
-  const setMangoStore = useMangoStore((s) => s.set)
-  const router = useRouter()
-  const mangoGroup = useMangoStore(mangoGroupSelector)
-  const connection = useMangoStore(connectionSelector)
-  const { query } = router
-
-  useEffect(() => {
-    const storeReferrer = async () => {
-      if (query.ref && mangoGroup) {
-        let referrerPk
-        if (query.ref.length === 44) {
-          referrerPk = new PublicKey(query.ref)
-        } else {
-          let decodedRefLink: string | null = null
-          try {
-            decodedRefLink = decodeURIComponent(query.ref as string)
-          } catch (e) {
-            console.log('Failed to decode referrer link', e)
-          }
-          const mangoClient = useMangoStore.getState().connection.client
-          if (!decodedRefLink) return
-
-          const { referrerPda } = await mangoClient.getReferrerPda(
-            mangoGroup,
-            decodedRefLink
-          )
-          const info = await connection.getAccountInfo(referrerPda)
-          if (info) {
-            const decoded = ReferrerIdRecordLayout.decode(info.data)
-            const referrerRecord = new ReferrerIdRecord(decoded)
-            referrerPk = referrerRecord.referrerMangoAccount
-          }
-        }
-        setMangoStore((state) => {
-          state.referrerPk = referrerPk
-        })
-      }
-    }
-
-    storeReferrer()
-  }, [query, mangoGroup])
-
-  return null
-}
 
 const PageTitle = () => {
-  // const router = useRouter()
-  // const marketConfig = useMangoStore((s) => s.selectedMarket.config)
-  // const market = useMangoStore((s) => s.selectedMarket.current)
-  // const oraclePrice = useOraclePrice()
-  // const selectedMarketName = marketConfig.name
-  // const marketTitleString =
-  //   marketConfig && router.pathname == '/'
-  //     ? `${
-  //         oraclePrice
-  //           ? oraclePrice.toFixed(getDecimalCount(market?.tickSize)) + ' | '
-  //           : ''
-  //       }${selectedMarketName} - `
-  //     : ''
 
-  return (
-    <Head>
-      {/*<title>{marketTitleString}Mango Markets</title>*/}
-      <title>XRPL Sniper</title>
-    </Head>
-  )
+    return (
+        <Head>
+            {/*<title>{marketTitleString}Mango Markets</title>*/}
+            <title>XRPL Sniper</title>
+        </Head>
+    )
 }
 
-function App({ Component, pageProps }) {
-  const wallets = useMemo(
-    () => [
-      new BackpackWalletAdapter(),
-      new CoinbaseWalletAdapter(),
-      new PhantomWalletAdapter(),
-      new SolflareWalletAdapter(),
-      new ExodusWalletAdapter(),
-      new SolletWalletAdapter(),
-      new GlowWalletAdapter(),
-      new SlopeWalletAdapter(),
-      new BitpieWalletAdapter(),
-      new HuobiWalletAdapter(),
-      new WalletConnectWalletAdapter({
-        network:
-          CLUSTER === 'mainnet'
-            ? WalletAdapterNetwork.Mainnet
-            : WalletAdapterNetwork.Devnet,
-        options: {
-          projectId: 'f3d38b197d7039c03c345f82ed68ef9b',
-          metadata: {
-            name: 'Mango Markets',
-            description: 'Mango Markets',
-            url: 'https://trade.mango.markets/',
-            icons: ['https://trade.mango.markets/assets/icons/logo.svg'],
-          },
-        },
-      }),
-    ],
-    []
-  )
-
-  return (
-    <>
-      <Head>
-        <title>XRPL Sniper</title>
-        <link rel="icon" href="/favicon.ico" />
-        <meta property="og:title" content="XRPL Sniper" />
-        <meta name="viewport" content="width=device-width, initial-scale=1" />
-        <meta
-          name="keywords"
-          content="XRPL Sniper, nft rarity ranking, nft stats"
-        />
-        <meta
-          name="description"
-          content="XRPL Sniper - NFT Rarity ranking and NFT Statistic service on XRPL."
-        />
-        <link
-          rel="apple-touch-icon"
-          sizes="192x192"
-          href="/apple-touch-icon.png"
-        />
-        <meta name="msapplication-TileColor" content="#da532c" />
-        <meta name="theme-color" content="#ffffff" />
-        <meta name="twitter:card" content="summary_large_image" />
-        <meta name="twitter:title" content="Mango Markets" />
-        <meta
-          name="twitter:description"
-          content="XRPL Sniper - NFT Rarity ranking and NFT Statistic service on XRPL."
-        />
-        <meta
-          name="twitter:image"
-          content="https://www.mango.markets/socials/twitter-image-1200x600.png?34567878"
-        />
-        <meta name="google" content="notranslate" />
-        <link rel="manifest" href="/manifest.json"></link>
-      </Head>
-      <Script
-        strategy="lazyOnload"
-        src="https://www.googletagmanager.com/gtag/js?id=GTM-T7TLZ7D"
-      ></Script>
-      <Script strategy="lazyOnload">
-        {`
+function App({Component, pageProps}) {
+    return (
+        <>
+            <Head>
+                <title>XRPL Sniper</title>
+                <link rel="icon" href="/favicon.ico"/>
+                <meta property="og:title" content="XRPL Sniper"/>
+                <meta name="viewport" content="width=device-width, initial-scale=1"/>
+                <meta
+                    name="keywords"
+                    content="XRPL Sniper, nft rarity ranking, nft stats"
+                />
+                <meta
+                    name="description"
+                    content="XRPL Sniper - NFT Rarity ranking and NFT Statistic service on XRPL."
+                />
+                <link
+                    rel="apple-touch-icon"
+                    sizes="192x192"
+                    href="/apple-touch-icon.png"
+                />
+                <meta name="msapplication-TileColor" content="#da532c"/>
+                <meta name="theme-color" content="#ffffff"/>
+                <meta name="twitter:card" content="summary_large_image"/>
+                <meta name="twitter:title" content="Mango Markets"/>
+                <meta
+                    name="twitter:description"
+                    content="XRPL Sniper - NFT Rarity ranking and NFT Statistic service on XRPL."
+                />
+                <meta
+                    name="twitter:image"
+                    content="https://www.mango.markets/socials/twitter-image-1200x600.png?34567878"
+                />
+                <meta name="google" content="notranslate"/>
+                <link rel="manifest" href="/manifest.json"></link>
+            </Head>
+            <Script
+                strategy="lazyOnload"
+                src="https://www.googletagmanager.com/gtag/js?id=GTM-T7TLZ7D"
+            ></Script>
+            <Script strategy="lazyOnload">
+                {`
           window.dataLayer = window.dataLayer || [];
           function gtag(){dataLayer.push(arguments);}
           gtag('js', new Date());
 
           gtag('config', 'GTM-T7TLZ7D');
         `}
-      </Script>
-      <ThemeProvider defaultTheme="Dark">
-        <ErrorBoundary>
-          <WalletProvider wallets={wallets}>
-            <PageTitle />
-            <MangoStoreUpdater />
-            <OpenOrdersStoreUpdater />
-            <SpotBalancesStoreUpdater />
-            <PerpPositionsStoreUpdater />
-            <TradeHistoryStoreUpdater />
-            <FetchReferrer />
-            <WalletListener />
-            <ViewportProvider>
-              <div className="min-h-screen bg-th-bkg-1">
-                <ErrorBoundary>
-                  <Layout>
-                    <Component {...pageProps} />
-                  </Layout>
-                </ErrorBoundary>
-              </div>
+            </Script>
+            <ThemeProvider defaultTheme="Dark">
+                <PageTitle/>
+                <ViewportProvider>
+                    <div className="min-h-screen bg-th-bkg-1">
+                        <Layout>
+                            <Component {...pageProps} />
+                        </Layout>
+                    </div>
 
-              <Notifications />
-            </ViewportProvider>
-          </WalletProvider>
-        </ErrorBoundary>
-      </ThemeProvider>
-    </>
-  )
+                    {/*<Notifications />*/}
+                </ViewportProvider>
+            </ThemeProvider>
+        </>
+    )
 }
 
 export default appWithTranslation(App)

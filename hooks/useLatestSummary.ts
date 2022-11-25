@@ -5,7 +5,7 @@ import {LatestSummary, LatestSummaryResponse} from "../@types/xrplsniper";
 
 export default function useLatestSummary () {
     const { data, error } = useSWR<LatestSummaryResponse>(
-        `${api_host}/db/summary/all`,
+        `${api_host}/api/summary/all`,
         fetcher
     )
 

@@ -1,7 +1,5 @@
 import {useEffect, useState} from 'react'
 import StatsTotals from 'components/stats_page/StatsTotals'
-// import StatsAssets from 'components/stats_page/StatsAssets'
-// import StatsPerps from 'components/stats_page/StatsPerps'
 import Swipeable from 'components/mobile/Swipeable'
 import SwipeableTabs from 'components/mobile/SwipeableTabs'
 import Tabs from 'components/Tabs'

@@ -16,7 +16,7 @@ export default function useLatestSummary () {
 
     return {
         summary,
-        isLogLoading: !error && !data,
-        isLogError: error
+        isLoading: !error && !data,
+        isError: error
     }
 }

@@ -1,7 +1,9 @@
 import styles from './Collection.module.css';
-import {LatestSummary} from "../../@types/xrplsniper";
+import {LatestSummary, SummaryItem} from "../../@types/xrplsniper";
 import {FC, useEffect, useState} from "react";
 
+
+const summary_keys: string[] = ['1H', '24H', '7D', '30D']
 
 interface Props {
     loading: boolean
@@ -13,33 +15,18 @@ const Overview: FC<Props> = ({
                                  loading,
                                  summary
                              }) => {
-    const [items, setItems] = useState<StatItem[]>([])
+    const [items, setItems] = useState<SummaryItem[]>([])
 
     useEffect(()=> {
         if (!summary) {
             return
         }
 
-        const statItems: StatItem[] = [
-            {
-            'title': '1H',
-            'cnt': summary.xrpl_latest_1h_cnt,
-            'volumn': summary.xrpl_latest_1h_volumn
-            },{
-                'title': '24H',
-                'cnt': summary.xrpl_latest_24h_cnt,
-                'volumn': summary.xrpl_latest_24h_volumn
-            }, {
-                'title': '7D',
-                'cnt': summary.xrpl_latest_7d_cnt,
-                'volumn': summary.xrpl_latest_7d_volumn
-            }, {
-                'title': '30D',
-                'cnt': summary.xrpl_latest_30d_cnt,
-                'volumn': summary.xrpl_latest_30d_volumn
-            }
-        ]
-
+        const statItems: SummaryItem[] = []
+        summary_keys.map(key=> {
+            const value = summary[key]
+            statItems.push(value)
+        })
         setItems(statItems)
     }, [summary, loading])
 
@@ -55,8 +42,7 @@ const Overview: FC<Props> = ({
                 </p>
             </div>
 
-            {/*loading没用起来。{loading}*/}
-            <div className="flex items-center justify-items-start gap-2 pb-3">
+            <div className="flex items-center justify-items-start gap-2 pb-3 flex-wrap">
                 {loading&& (
                     <> TODO: it is loading..</>
                 )}
@@ -68,13 +54,7 @@ const Overview: FC<Props> = ({
     )
 }
 
-interface StatItem {
-    title: string
-    cnt: number
-    volumn: number
-}
-
-const statItem = (item: StatItem | null) => {
+const statItem = (item: SummaryItem | null) => {
 
     return (
         <div className='panel p-2 hover:border-gray-900 w-48 bg-gray-900 rounded-xl'>
@@ -94,6 +74,5 @@ const statItem = (item: StatItem | null) => {
         </div>
     )
 }
-
 
 export default Overview;

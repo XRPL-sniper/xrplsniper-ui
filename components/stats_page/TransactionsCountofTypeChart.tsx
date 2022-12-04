@@ -1,41 +1,14 @@
 import {FunctionComponent, useState} from 'react'
-// import {useTheme} from 'next-themes'
-// import dayjs from 'dayjs'
 import {
     AreaChart,
     Area,
-    // Cell,
     XAxis,
     YAxis,
     Tooltip,
     Legend,
-    // CartesianGrid,
-    // BarChart,
-    // Bar,
-    // ReferenceLine,
 } from 'recharts'
 import useDimensions from 'react-cool-dimensions'
 import {useTheme} from "next-themes";
-// import dayjs from "dayjs";
-// import {numberCompactFormatter} from 'utils'
-
-// interface ChartProps {
-//     data: any
-//     daysRange?: number
-//     hideRangeFilters?: boolean
-//     title?: string
-//     xAxis: string
-//     yAxis: string
-//     yAxisWidth?: number
-//     type: string
-//     labelFormat: (x) => ReactNode
-//     tickFormat?: (x) => any
-//     showAll?: boolean
-//     titleValue?: number
-//     useMulticoloredBars?: boolean
-//     zeroLine?: boolean
-//     loading?: boolean
-// }
 
 interface TransactionsOfType {
     title: string
